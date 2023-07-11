@@ -3,7 +3,7 @@ import fs from "fs/promises";
 import _ from "lodash";
 import { Character } from "./types";
 
-const input = "src/open5e/generated-asset.json";
+const input = "src/open5e/open5e-input-asset.json";
 const output = "src/alchemy/generated-asset.json";
 const url = "https://api.open5e.com/v1/monsters/aboleth/";
 
@@ -25,7 +25,6 @@ async function convertOpen5eToAlchemy(
 ) {
   const open5eData = await readJson(inputFilename);
 
-  // Note: Add remaining property mappings here
   const alchemyData: Character = {
     abilityScores: [
       { name: "str", value: open5eData.strength },
@@ -35,63 +34,93 @@ async function convertOpen5eToAlchemy(
       { name: "wis", value: open5eData.wisdom },
       { name: "cha", value: open5eData.charisma },
     ],
-    actions: open5eData.actions.map((action) => ({
+    actions: open5eData.actions.map((action, index) => ({
       name: action.name,
       description: action.desc,
-      // ...additional properties with assumed default values or more processing...
+      sortOrder: index,
+      steps: [],
     })),
-    age: "Unknown",
+    age: "Unknown", // No equivalent data in open5e
     alignment: open5eData.alignment,
     armorClass: open5eData.armor_class,
     armorType: open5eData.armor_desc,
-    appearance: "Unknown",
+    appearance: "Unknown", // No equivalent data in open5e
     challengeRating: open5eData.challenge_rating,
-    classes: [], // assuming no classes data available in open5eData
-    conditionImmunities: [], // assuming no conditionImmunities data available in open5eData
-    copper: 0,
+    classes: [],
+    conditionImmunities: Array.isArray(open5eData.condition_immunities)
+      ? open5eData.condition_immunities.map((immunity) => immunity.name)
+      : [],
+    copper: 0, // No equivalent data in open5e
     currentHp: open5eData.hit_points,
-    damageImmunities: [], // assuming no damageImmunities data available in open5eData
-    damageResistances: [], // assuming no damageResistances data available in open5eData
-    damageVulnerabilities: [], // assuming no damageVulnerabilities data available in open5eData
+    damageImmunities: Array.isArray(open5eData.damage_immunities)
+      ? open5eData.damage_immunities.map((immunity) => ({
+          condition: "immune",
+          damageType: immunity.name,
+        }))
+      : [],
+    damageResistances: Array.isArray(open5eData.damage_resistances)
+      ? open5eData.damage_resistances.map((resistance) => ({
+          condition: "resistant",
+          damageType: resistance.name,
+        }))
+      : [],
+    damageVulnerabilities: Array.isArray(open5eData.damage_vulnerabilities)
+      ? open5eData.damage_vulnerabilities.map((vulnerability) => ({
+          condition: "vulnerable",
+          damageType: vulnerability.name,
+        }))
+      : [],
     description: open5eData.desc,
-    electrum: 0,
-    eyes: "Unknown",
-    exp: 0,
-    gold: 0,
-    hair: "Unknown",
-    height: "Unknown",
+    electrum: 0, // No equivalent data in open5e
+    eyes: "Unknown", // No equivalent data in open5e
+    exp: 0, // No equivalent data in open5e
+    gold: 0, // No equivalent data in open5e
+    hair: "Unknown", // No equivalent data in open5e
+    height: "Unknown", // No equivalent data in open5e
     hitDice: open5eData.hit_dice,
     imageUri: open5eData.img_main,
-    initiativeBonus: 0,
-    isBackstoryPublic: false,
-    isSpellcaster: false,
+    initiativeBonus: 0, // No equivalent data in open5e
+    isBackstoryPublic: true, // No equivalent data in open5e
+    isSpellcaster: false, // No equivalent data in open5e
     itemsWithActions: [],
     legendary:
       _.isArray(open5eData.legendary_actions) &&
       open5eData.legendary_actions.length > 0,
     maxHp: open5eData.hit_points,
-    movementModes: [], // assuming no movementModes data available in open5eData
+    movementModes: Array.isArray(open5eData.speed?.walk)
+      ? [{ distance: open5eData.speed.walk, mode: "walk" }]
+      : [],
     name: open5eData.name,
-    platinum: 0,
-    proficiencies: [], // assuming no proficiencies data available in open5eData
-    proficiencyBonus: 0,
+    platinum: 0, // No equivalent data in open5e
+    proficiencies: Array.isArray(open5eData.proficiencies)
+      ? open5eData.proficiencies.map((proficiency) => ({
+          name: proficiency.name,
+          type: proficiency.type,
+        }))
+      : [],
+    proficiencyBonus: open5eData.prof_bonus,
     race: open5eData.type,
-    senses: [], // assuming no senses data available in open5eData
-    silver: 0,
-    skills: [], // assuming no skills data available in open5eData
-    skin: "Unknown",
+    senses: Array.isArray(open5eData.senses)
+      ? open5eData.senses.map((sense) => ({
+          distance: sense.range,
+          name: sense.name,
+        }))
+      : [],
+    silver: 0, // No equivalent data in open5e
+    skills: [],
+    skin: "Unknown", // No equivalent data in open5e
     size: open5eData.size,
-    speed: open5eData.speed.walk,
-    spells: [], // assuming no spells data available in open5eData
-    spellcastingAbility: "",
-    spellFilters: [],
+    speed: Array.isArray(open5eData.speed?.walk) ? open5eData.speed.walk : 0,
+    spells: [],
+    spellcastingAbility: "None", // No equivalent data in open5e
+    spellFilters: [], // No equivalent data in open5e
     spellSlots: [],
-    systemKey: "",
-    textBlocks: [], // assuming no textBlocks data available in open5eData
-    trackers: [], // assuming no trackers data available in open5eData
+    systemKey: "alchemy", // No equivalent data in open5e
+    textBlocks: [],
+    trackers: [],
     type: open5eData.type,
     typeTags: [],
-    weight: "Unknown",
+    weight: "Unknown", // No equivalent data in open5e
   };
 
   await fs.writeFile(outputFilename, JSON.stringify(alchemyData, null, 2));
