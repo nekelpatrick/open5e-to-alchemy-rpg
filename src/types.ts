@@ -59,6 +59,21 @@ export type AbilityScores = {
 };
 
 export type Action = {
+  description: string;
+  name: string;
+  sortOrder: number;
+  steps: ActionStep[];
+};
+
+export type ActionStep = {
+  type: string;
+  journalCommand: ActionStepJournalCommand;
+  diceRoll: ActionStepDamage[];
+  attack: ActionStepAttack;
+  skillCheck: ActionStepSkillCheck;
+};
+
+export type ActionStepAttack = {
   ability: string;
   actionType: string;
   bonus: number;
@@ -73,23 +88,11 @@ export type Action = {
   savingThrow: SavingThrow;
 };
 
-export type ActionStep = {
-  description: string;
-  name: string;
-  sortOrder: number;
-  steps: ActionStep[];
-};
-
-export type ActionStepAttack = {
-  type: string;
-  journalCommand: ActionStepJournalCommand;
-  diceRoll: ActionStepDamage[];
-  attack: ActionStepAttack;
-  skillCheck: ActionStepSkillCheck;
-};
-
 export type ActionStepDamage = {
-  characters: Character[];
+  abilityName: string;
+  bonus: number;
+  dice: string;
+  type: string;
 };
 
 export type ActionStepJournalCommand = {
