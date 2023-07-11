@@ -1,11 +1,86 @@
-const fs = require('fs');
+import fs from 'fs';
 
 
 // Read the Open5e JSON data
-const open5eData = require('./open5e/generated-asset.json');
+const open5eData = ('./open5e/generated-asset.json');
+
+
+
+interface Character {
+  id: string;
+  name: string;
+  description: string;
+  level: number;
+  experience: number;
+  health: number;
+  maxHealth: number;
+  mana: number;
+  maxMana: number;
+  strength: number;
+  agility: number;
+  intelligence: number;
+  charisma: number;
+  luck: number;
+  gold: number;
+  inventory: InventoryItem[];
+  spells: Spell[];
+  quests: Quest[];
+}
+
+interface InventoryItem {
+  id: string;
+  name: string;
+  description: string;
+  type: string;
+  value: number;
+  quantity: number;
+}
+
+interface Spell {
+  id: string;
+  name: string;
+  description: string;
+  type: string;
+  cost: number;
+  power: number;
+}
+
+interface Quest {
+  id: string;
+  name: string;
+  description: string;
+  status: string;
+  reward: Reward;
+}
+
+interface Reward {
+  experience: number;
+  gold: number;
+  item: InventoryItem;
+}
+
 
 // Create an empty Alchemy JSON object
-const alchemyData = {};
+const alchemyData:Character = {
+  id: '',
+  name: '',
+  description: '',
+  level: 0,
+  experience: 0,
+  health: 0,
+  maxHealth: 0,
+  mana: 0,
+  maxMana: 0,
+  strength: 0,
+  agility: 0,
+  intelligence: 0,
+  charisma: 0,
+  luck: 0,
+  gold: 0,
+  inventory: [],
+  spells: [],
+  quests: []
+};
 
 // Map ability scores
 alchemyData.abilityScores = [

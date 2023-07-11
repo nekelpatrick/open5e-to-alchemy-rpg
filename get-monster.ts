@@ -1,5 +1,5 @@
-const fetch = require('isomorphic-fetch');
-const fs = require('fs');
+import fetch from 'isomorphic-fetch';
+import fs from 'fs';
 
 async function writeJSONToFile(url, filename) {
   try {

@@ -7,7 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "get": "node get-monster.js",
     "parse": "node parse-monster.js"
-
   },
   "keywords": [],
   "author": "",
@@ -15,5 +14,8 @@
   "dependencies": {
     "isomorphic-fetch": "^3.0.0",
     "node-fetch": "^3.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.1"
   }
 }
