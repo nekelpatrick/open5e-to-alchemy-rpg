@@ -5,7 +5,8 @@ import { Character } from "./types";
 
 const input = "src/open5e/open5e-input-asset.json";
 const output = "src/alchemy/generated-asset.json";
-const url = "https://api.open5e.com/v1/monsters/aboleth/";
+const monsterSlug = "adult-blue-dragon";
+const url = `https://api.open5e.com/v1/monsters/${monsterSlug}`;
 
 async function fetchAndSaveJson(url: string, filename: string) {
   const response = await fetch(url);
