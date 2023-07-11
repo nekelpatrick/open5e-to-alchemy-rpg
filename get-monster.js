@@ -15,7 +15,7 @@ async function writeJSONToFile(url, filename) {
 
 // Usage
 const url = 'https://api.open5e.com/v1/monsters/aboleth/';
-const filename = 'open5e-asset.json';
+const filename = './open5e/generated-asset.json';
 
 writeJSONToFile(url, filename);
 

@@ -2,7 +2,7 @@ const fs = require('fs');
 
 
 // Read the Open5e JSON data
-const open5eData = require('./open5e-asset.json');
+const open5eData = require('./open5e/generated-asset.json');
 
 // Create an empty Alchemy JSON object
 const alchemyData = {};
@@ -146,7 +146,7 @@ console.log('writing');
 const alchemyJson = JSON.stringify(alchemyData, null, 2);
 
 // Write the Alchemy JSON to a file
-fs.writeFile('alchemy-asset.json', alchemyJson, 'utf8', err => {
+fs.writeFile('./alchemy/generated-asset.json', alchemyJson, 'utf8', err => {
   if (err) {
     console.error('Error writing the file:', err);
   } else {
