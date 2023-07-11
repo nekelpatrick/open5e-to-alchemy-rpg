@@ -1,3 +1,6 @@
+export type Characters = {
+  characters: Character[];
+};
 export type Character = {
   abilityScores: AbilityScores[];
   actions: Action[];
