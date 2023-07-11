@@ -1,0 +1,19 @@
+{
+  "name": "open5e-to-alchemy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "get": "node get-monster.js",
+    "parse": "node parse-monster.js"
+
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "isomorphic-fetch": "^3.0.0",
+    "node-fetch": "^3.3.1"
+  }
+}
