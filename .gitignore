@@ -1,2 +1,4 @@
 node_modules
 *-asset.json
+build
+assets

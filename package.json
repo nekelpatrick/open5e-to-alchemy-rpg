@@ -4,18 +4,25 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "rimraf ./build && tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "get": "node get-monster.js",
-    "parse": "node parse-monster.js"
+    "parse": "node parse-monster.js",
+    "start": "npm run build && node build/index.js",
+    "start:dev": "npx nodemon"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.18.2",
     "isomorphic-fetch": "^3.0.0",
     "node-fetch": "^3.3.1"
   },
   "devDependencies": {
-    "@types/node": "^20.4.1"
+    "@types/node": "^20.4.1",
+    "nodemon": "^3.0.1",
+    "rimraf": "^5.0.1",
+    "ts-node": "^10.9.1"
   }
 }
